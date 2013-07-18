@@ -1,0 +1,54 @@
+From 7bb2855ce7bca3bb3ac8647a57c49299977034a2 Mon Sep 17 00:00:00 2001
+From: Lukasz Pawlik <lukasz.pawlik@comarch.com>
+Date: Tue, 14 May 2013 07:52:21 +0200
+Subject: [PATCH 1/2] Add eail library initialization from elm module
+
+---
+ src/lib/elm_main.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/src/lib/elm_main.c b/src/lib/elm_main.c
+index 1a09663..9ec664e 100644
+--- a/src/lib/elm_main.c
++++ b/src/lib/elm_main.c
+@@ -70,7 +70,6 @@ static int _elm_ql_init_count = 0;
+ static int _elm_policies[ELM_POLICY_LAST];
+ static Ecore_Event_Handler *_elm_exit_handler = NULL;
+ static Eina_Bool quicklaunch_on = 0;
+-
+ static Eina_Bool
+ _elm_signal_exit(void *data  __UNUSED__,
+                  int ev_type __UNUSED__,
+@@ -198,6 +197,20 @@ _prefix_shutdown(void)
+    app_pfx = NULL;
+ }
+ 
++static void
++_initialize_eail(void)
++{
++   /*Initialize eail library*/
++   Elm_Module *m;
++   static int eail_initted = 0;
++   if (eail_initted > 1) return;
++   if ((m = _elm_module_find_as("eail/api")))
++     {
++        m->init_func(m);
++        eail_initted++;
++     }
++}
++
+ EAPI int
+ elm_init(int    argc,
+          char **argv)
+@@ -846,6 +859,8 @@ elm_quicklaunch_exe_path_get(const char *exe)
+ EAPI void
+ elm_run(void)
+ {
++   _initialize_eail();
++
+    ecore_main_loop_begin();
+ }
+ 
+-- 
+1.7.10.4
+
