@@ -5,11 +5,15 @@ Enlightenment Accessibility Implementation Library
 An implementation of ATK interfaces library for Elementary.
 
 ------------------------------------------------------------------------------
+ELEMENTARY PATCHING:
+
+Obligatory use 0001-Add-eail-library-initialization-from-elm-module.patch to patch Elementary before Eail installation
+
+------------------------------------------------------------------------------
 COMPILING AND INSTALLING:
 
   ./autogen.sh
-(optionally use ./configure --with-elementary-modules=/usr/local/lib/elementary/modules/eail/linux-gnu-i686-1.7.99/  )
-  ./configure
+  ./configure --with-elementary-modules=/usr/local/lib/elementary/modules/eail/linux-gnu-arch-1.7.99/
   make
 (do this as root unless you are installing in your users directories):
   make install
@@ -18,8 +22,7 @@ COMPILING AND INSTALLING:
 TESTING
 
   ./autogen.sh
-(optionally use ./configure --with-elementary-modules=/usr/local/lib/elementary/modules/eail/linux-gnu-i686-1.7.99/  )
-  ./configure
+  ./configure --with-elementary-modules=/usr/local/lib/elementary/modules/eail/linux-gnu-arch-1.7.99/
   make -j 2
 (do this as root unless you are installing in your users directories):
   make install
